@@ -1,0 +1,43 @@
+os: aurora
+text: 'Aurora CH3000'
+type: environment
+mib_dir: 
+    - aurora
+discovery:
+    -
+        sysDescr:
+            - 'Aurora Networks CH3000 Shelf'
+            
+mib: AURORA-SYSTEM3000-MIB
+modules:
+    sensors:
+        dbm:
+            data:
+                -
+                    oid: arRxInputOpticalPower
+                    value: arRxInputOpticalPower
+                    num_oid: '.1.3.6.1.4.1.9204.1.23.1.1.1.3.{{ $index }}'
+                    descr: Forward Path Receiver
+        state:
+            data:        
+                -
+                    oid: oS32MxMSwitchPos
+                    value: oS32MxMSwitchPos
+                    num_oid: '.1.3.6.1.4.1.9204.1.31.1.1.1.7.{{ $index }}'
+                    descr: Current Video Path
+                    state_name: 'Redundant Video Path'
+                    states:
+                    - { value: 02, generic: 0, graph: 0, descr: Primary }
+                    - { value: 03, generic: 2, graph: 2, descr: Secondary }
+                -
+                    oid: powerSupplyTable
+                    value: psCurrentAlarms
+                    num_oid: '.1.3.6.1.4.1.9204.1.3.1.1.6.{{ $index }}'
+                    descr: PSU
+                    state_name: 'Power Supply Status'
+                    states:
+                    - { value: 00, generic: 0, graph: 0, descr: OK }
+                    - { value: 01, generic: 2, graph: 2, descr: Fan Failure}
+                    - { value: 02, generic: 2, graph: 2, descr: High Temp }
+                    - { value: 04, generic: 2, graph: 2, descr: Output Power }
+ 
